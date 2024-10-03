@@ -1,0 +1,20 @@
+[
+    {
+      "firstname": "Jack",
+      "lastname": "Connor",
+      "email": "jackconnor@gmail.com",
+      "room": "121"
+    },
+    {
+      "firstname": "Tom",
+      "lastname": "Pitt",
+      "email": "tompitt@yahoo.com",
+      "room": "223"
+    },
+    {
+      "firstname": "Jannet",
+      "lastname": "Stills",
+      "email": "jannetstills@gmail.com",
+      "room": "400"
+    }
+  ]
