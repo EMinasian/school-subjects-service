@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Mathematics",
+        "description": "A mathematics course",
+        "class": "E22",
+        "teacherId": 1
+    },
+    {
+        "title": "Biology",
+        "description": "A biology course",
+        "class": "E42",
+        "teacherId": 2
+    },
+    {
+        "title": "Sociology",
+        "description": "A sociology course",
+        "class": "E54",
+        "teacherId": 3
+    },
+    {
+        "title": "Literature",
+        "description": "A literature course",
+        "class": "E16",
+        "teacherId": 3
+    }
+]
