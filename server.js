@@ -9,8 +9,18 @@ const {
   GraphQLInt,
   GraphQLNonNull,
 } = require("graphql");
-const { getAllSubjects } = require('./utils/subjects')
+const { getAllSubjects, getSubjectStudents } = require('./utils/subjects')
 const { getAllTeachers } = require('./utils/teachers')
+
+
+const StudentType = new GraphQLObjectType({
+  name: 'Student',
+  description: 'Represents a student',
+  fields: () => ({
+    firstname: { type: new GraphQLNonNull(GraphQLString) },
+    lastname: { type: new GraphQLNonNull(GraphQLString) }
+  })
+})
 
 const SubjectType = new GraphQLObjectType({
   name: 'Subject',
@@ -20,7 +30,14 @@ const SubjectType = new GraphQLObjectType({
     title: { type: new GraphQLNonNull(GraphQLString) },
     description: { type: new GraphQLNonNull(GraphQLString) },
     class: { type: GraphQLString },
-    teacherId: { type: new GraphQLNonNull(GraphQLInt) }
+    teacherId: { type: new GraphQLNonNull(GraphQLInt) },
+    students: { 
+      type: new GraphQLList(StudentType),
+      resolve: (subject) => {
+        const students = getSubjectStudents(subject.id)
+        return students
+      }
+    }
   })
 })
 

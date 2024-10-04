@@ -1,0 +1,46 @@
+[
+    {
+        "subjectId": 1,
+        "studentId": 1
+    },
+    {
+        "subjectId": 1,
+        "studentId": 2
+    },
+    {
+        "subjectId": 1,
+        "studentId": 3
+    },
+    {
+        "subjectId": 2,
+        "studentId": 3
+    },
+    {
+        "subjectId": 2,
+        "studentId": 4
+    },
+    {
+        "subjectId": 3,
+        "studentId": 1
+    },
+    {
+        "subjectId": 3,
+        "studentId": 4
+    },
+    {
+        "subjectId": 4,
+        "studentId": 2
+    },
+    {
+        "subjectId": 3,
+        "studentId": 3
+    },
+    {
+        "subjectId": 3,
+        "studentId": 4
+    },
+    {
+        "subjectId": 3,
+        "studentId": 5
+    }
+]

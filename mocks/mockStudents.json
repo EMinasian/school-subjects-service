@@ -1,0 +1,22 @@
+[
+    {
+        "firstname": "Harry",
+        "lastname": "Potter"
+    },
+    {
+        "firstname": "Ron",
+        "lastname": "Weasley"
+    },
+    {
+        "firstname": "Ginny",
+        "lastname": "Weasley"
+    },
+    {
+        "firstname": "Hermione",
+        "lastname": "Granger"
+    },
+    {
+        "firstname": "Draco",
+        "lastname": "Malfoy"
+    }
+]

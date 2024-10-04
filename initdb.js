@@ -2,6 +2,8 @@ const sql = require("better-sqlite3");
 const db = sql("school.db");
 const mockTeachers = require("./mocks/mockTeachers.json")
 const mockSubjects = require("./mocks/mockSubjects.json")
+const mockStudents = require("./mocks/mockStudents.json")
+const mockEnrollment = require("./mocks/mockEnrollment.json")
 
 db.prepare(
   `
@@ -26,6 +28,26 @@ db.prepare(
     )
 `
 ).run();
+
+db.prepare(
+   `
+    CREATE TABLE IF NOT EXISTS students (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        firstname TEXT NOT NULL,
+        lastname TEXT NOT NULL
+     )
+ `
+ ).run();
+
+ db.prepare(
+   `
+    CREATE TABLE IF NOT EXISTS enrollment (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subjectId INTEGER REFERENCES subjects(id),
+        studentId INTEGER REFERENCES students(id)
+     )
+ `
+ ).run();
 
 async function initData() {
   const teachersDb = db.prepare(`
@@ -54,7 +76,31 @@ async function initData() {
 
  for (const subject of mockSubjects) {
   subjectsDb.run(subject);
-}
+ }
+
+ const studentsDb = db.prepare(`
+   INSERT INTO students VALUES (
+      null,
+      @firstname,
+      @lastname
+   )
+`);
+
+for (const student of mockStudents) {
+   studentsDb.run(student);
+ }
+
+ const enrollmentDb = db.prepare(`
+   INSERT INTO enrollment VALUES (
+      null,
+      @subjectId,
+      @studentId
+   )
+`);
+
+for (const enrollment of mockEnrollment) {
+   enrollmentDb.run(enrollment);
+ }
 }
 
 initData();
