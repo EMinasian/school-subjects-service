@@ -43,7 +43,7 @@ async function initData() {
   }
 
   const subjectsDb = db.prepare(`
-    INSERT INTO teachers VALUES (
+    INSERT INTO subjects VALUES (
        null,
        @title,
        @description,
