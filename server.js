@@ -9,7 +9,7 @@ const {
   GraphQLInt,
   GraphQLNonNull,
 } = require("graphql");
-const { getAllSubjects, getSubjectStudents, getSubjectTeacher } = require('./utils/subjects')
+const { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById } = require('./utils/subjects')
 const { getAllTeachers } = require('./utils/teachers')
 
 
@@ -66,9 +66,15 @@ const RootQueryType = new GraphQLObjectType({
     subjects: {
       type: new GraphQLList(SubjectType),
       description: "The list of subjects",
-      resolve: () => {
-        const subjects = getAllSubjects()
-        return subjects
+      args: { 
+        subjectId: { type: GraphQLInt } 
+      },
+      resolve: (parent, args) => {
+        const { subjectId } = args
+        if (subjectId) {
+          return getSubjectById(subjectId)
+        }
+        return getAllSubjects()
       }
     },
     teachers: {
