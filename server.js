@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require("cors");
 const expressGraphQL = require("express-graphql").graphqlHTTP;
 const {
   GraphQLSchema,
@@ -44,12 +45,8 @@ const schema = new GraphQLSchema({
 
 const app = express()
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    next();
-  });
+app.use(cors());
+
 
 app.get('/health/_ping', (req, res) => {
     res.status(200).json({message: 'The service is working.'})
