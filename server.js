@@ -24,6 +24,18 @@ const SubjectType = new GraphQLObjectType({
   })
 })
 
+const TeacherType = new GraphQLObjectType({
+  name: 'Teacher',
+  description: 'Represents a teacher',
+  fields: () => ({
+    id: { type: new GraphQLNonNull(GraphQLInt) },
+    firstname: { type: new GraphQLNonNull(GraphQLString) },
+    lastname: { type: new GraphQLNonNull(GraphQLString) },
+    email: { type: GraphQLString },
+    room: { type: GraphQLString }
+  })
+})
+
 const RootQueryType = new GraphQLObjectType({
   name: 'Query',
   description: "The root query",
@@ -34,6 +46,14 @@ const RootQueryType = new GraphQLObjectType({
       resolve: () => {
         const subjects = getAllSubjects()
         return subjects
+      }
+    },
+    teachers: {
+      type: new GraphQLList(TeacherType),
+      description: "The list of teachers",
+      resolve: () => {
+        const teachers = getAllTeachers()
+        return teachers
       }
     }
   })
@@ -59,10 +79,5 @@ app.use(
       graphiql: true,
     })
   );
-
-  app.get('/teachers', (req, res) => {
-    const teachers = getAllTeachers()
-    res.status(200).json(teachers)
-})
 
 app.listen(3000)
