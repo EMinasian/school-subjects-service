@@ -5,6 +5,19 @@ const getAllSubjects = () => {
     return db.prepare("SELECT * FROM subjects").all();
 }
 
+const getSubjectTeacher = (id) => {
+    const teachers = db.prepare(
+        `
+            SELECT firstname, lastname, email, room, teacherId FROM 
+            teachers, subjects WHERE
+            teachers.id = subjects.teacherId AND
+            subjects.id = @id
+        `
+    ).all({ id });
+
+    return teachers[0]
+}
+
 const getSubjectStudents = (id) => {
     return db.prepare(
         `
@@ -17,4 +30,4 @@ const getSubjectStudents = (id) => {
     ).all({ id });
 }
 
-module.exports = { getAllSubjects, getSubjectStudents }
+module.exports = { getAllSubjects, getSubjectStudents, getSubjectTeacher }
