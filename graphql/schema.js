@@ -6,7 +6,7 @@ const {
     GraphQLInt,
     GraphQLNonNull,
 } = require("graphql");
-const { getAllSubjects, getSubjectStudents, getSubjectTeacher, deleteEnrollment, getSubjectById, insertEnrollment } = require('../utils/subjects')
+const { getAllSubjects, getSubjectStudents, getSubjectTeacher, deleteEnrollment, getSubjectById, insertEnrollment, updateSubject } = require('../utils/subjects')
 const { getAllTeachers } = require('../utils/teachers')
 
 
@@ -111,6 +111,21 @@ const RootMutationType = new GraphQLObjectType({
         resolve: (parent, args) => {
           const { subjectId, studentId } = args;
           insertEnrollment(subjectId, studentId);
+          return getSubjectById(subjectId);
+        }
+      },
+      editSubject: {
+        type: new GraphQLList(SubjectType),
+        description: 'Edit an existing subject',
+        args: {
+          subjectId: { type: new GraphQLNonNull(GraphQLInt) },
+          title: { type: new GraphQLNonNull(GraphQLString) },
+          description: { type: new GraphQLNonNull(GraphQLString) },
+          teacherId: { type: new GraphQLNonNull(GraphQLInt) }
+        },
+        resolve: (parent, args) => {
+          const { subjectId, title, description, teacherId } = args;
+          updateSubject(subjectId, title, description, teacherId);
           return getSubjectById(subjectId);
         }
       }
