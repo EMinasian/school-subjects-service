@@ -59,16 +59,15 @@ const insertEnrollment = (subjectId, studentId) => {
     ).run({ subjectId, studentId });
 }
 
-const updateSubject = (subjectId, title, description, teacherId) => {
+const updateSubject = (subjectId, title, description) => {
     db.prepare(
         `
             UPDATE subjects SET
             title = @title,
-            description = @description,
-            teacherId = @teacherId
+            description = @description
             WHERE id = @subjectId
         `
-    ).run({ subjectId, title, description, teacherId });
+    ).run({ subjectId, title, description });
 }
 
 module.exports = { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById, deleteEnrollment, insertEnrollment, updateSubject }

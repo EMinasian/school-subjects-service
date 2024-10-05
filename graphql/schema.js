@@ -120,12 +120,11 @@ const RootMutationType = new GraphQLObjectType({
         args: {
           subjectId: { type: new GraphQLNonNull(GraphQLInt) },
           title: { type: new GraphQLNonNull(GraphQLString) },
-          description: { type: new GraphQLNonNull(GraphQLString) },
-          teacherId: { type: new GraphQLNonNull(GraphQLInt) }
+          description: { type: new GraphQLNonNull(GraphQLString) }
         },
         resolve: (parent, args) => {
-          const { subjectId, title, description, teacherId } = args;
-          updateSubject(subjectId, title, description, teacherId);
+          const { subjectId, title, description } = args;
+          updateSubject(subjectId, title, description);
           return getSubjectById(subjectId);
         }
       }
