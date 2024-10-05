@@ -89,7 +89,7 @@ const RootMutationType = new GraphQLObjectType({
     description: 'The root mutation',
     fields: {
       deleteEnrollment: {
-        type: new GraphQLList(StudentType),
+        type: new GraphQLList(SubjectType),
         description: 'Remove enrollment',
         args: {
           subjectId: { type: new GraphQLNonNull(GraphQLInt) },
@@ -98,7 +98,7 @@ const RootMutationType = new GraphQLObjectType({
         resolve: (parent, args) => {
           const { subjectId, studentId } = args;
           deleteEnrollment(subjectId, studentId);
-          return getSubjectStudents(subjectId);
+          return getSubjectById(subjectId);
         }
       }
     }
