@@ -50,4 +50,13 @@ const deleteEnrollment = (subjectId, studentId) => {
     ).run({ subjectId, studentId });
 }
 
-module.exports = { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById, deleteEnrollment }
+const insertEnrollment = (subjectId, studentId) => {
+    db.prepare(
+        `
+            INSERT INTO enrollment(subjectId, studentId) VALUES
+            (@subjectId, @studentId)
+        `
+    ).run({ subjectId, studentId });
+}
+
+module.exports = { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById, deleteEnrollment, insertEnrollment }
