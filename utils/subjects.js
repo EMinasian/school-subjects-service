@@ -29,10 +29,10 @@ const getSubjectTeacher = (id) => {
 const getSubjectStudents = (id) => {
     return db.prepare(
         `
-            SELECT firstname, lastname FROM 
-            students, enrollment, subjects WHERE
-            students.id = enrollment.studentId AND
-            enrollment.subjectId = subjects.id AND
+            SELECT students.id AS id, students.firstname, students.lastname 
+            FROM students 
+            JOIN enrollment ON students.id = enrollment.studentId 
+            JOIN subjects ON enrollment.subjectId = subjects.id WHERE
             subjects.id = @id
         `
     ).all({ id });

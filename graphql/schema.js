@@ -14,6 +14,7 @@ const StudentType = new GraphQLObjectType({
     name: 'Student',
     description: 'Represents a student',
     fields: () => ({
+      id: { type: GraphQLInt },
       firstname: { type: new GraphQLNonNull(GraphQLString) },
       lastname: { type: new GraphQLNonNull(GraphQLString) }
     })
@@ -49,8 +50,7 @@ const SubjectType = new GraphQLObjectType({
       students: { 
         type: new GraphQLList(StudentType),
         resolve: (subject) => {
-          const students = getSubjectStudents(subject.id)
-          return students
+          return getSubjectStudents(subject.id)
         }
       }
     })
@@ -78,8 +78,7 @@ const RootQueryType = new GraphQLObjectType({
         type: new GraphQLList(TeacherType),
         description: "The list of teachers",
         resolve: () => {
-          const teachers = getAllTeachers()
-          return teachers
+          return getAllTeachers()
         }
       }
     })
