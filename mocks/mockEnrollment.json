@@ -25,10 +25,6 @@
     },
     {
         "subjectId": 3,
-        "studentId": 4
-    },
-    {
-        "subjectId": 4,
         "studentId": 2
     },
     {
@@ -42,5 +38,9 @@
     {
         "subjectId": 3,
         "studentId": 5
+    },
+    {
+        "subjectId": 4,
+        "studentId": 2
     }
 ]

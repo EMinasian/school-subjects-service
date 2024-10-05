@@ -30,10 +30,12 @@ const getSubjectStudents = (id) => {
     return db.prepare(
         `
             SELECT students.id AS id, students.firstname, students.lastname 
-            FROM students 
-            JOIN enrollment ON students.id = enrollment.studentId 
-            JOIN subjects ON enrollment.subjectId = subjects.id WHERE
-            subjects.id = @id
+            FROM (
+                SELECT * FROM subjects
+                INNER JOIN enrollment ON subjects.id = enrollment.subjectId
+                WHERE subjects.id = @id
+            ) AS S
+            INNER JOIN students ON students.id = S.studentId 
         `
     ).all({ id });
 }
