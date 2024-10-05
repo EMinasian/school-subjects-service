@@ -38,4 +38,14 @@ const getSubjectStudents = (id) => {
     ).all({ id });
 }
 
-module.exports = { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById }
+const deleteEnrollment = (subjectId, studentId) => {
+    db.prepare(
+        `
+            DELETE FROM enrollment WHERE
+            subjectId = @subjectId AND
+            studentId = @studentId
+        `
+    ).run({ subjectId, studentId });
+}
+
+module.exports = { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById, deleteEnrollment }

@@ -6,7 +6,7 @@ const {
     GraphQLInt,
     GraphQLNonNull,
 } = require("graphql");
-const { getAllSubjects, getSubjectStudents, getSubjectTeacher, getSubjectById } = require('../utils/subjects')
+const { getAllSubjects, getSubjectStudents, getSubjectTeacher, deleteEnrollment, getSubjectById } = require('../utils/subjects')
 const { getAllTeachers } = require('../utils/teachers')
 
 
@@ -85,8 +85,29 @@ const RootQueryType = new GraphQLObjectType({
     })
 })
 
+const RootMutationType = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'The root mutation',
+    fields: {
+      deleteEnrollment: {
+        type: new GraphQLList(StudentType),
+        description: 'Remove enrollment',
+        args: {
+          subjectId: { type: new GraphQLNonNull(GraphQLInt) },
+          studentId: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+        resolve: (parent, args) => {
+          const { subjectId, studentId } = args;
+          deleteEnrollment(subjectId, studentId);
+          return getSubjectStudents(subjectId);
+        }
+      }
+    }
+  });
+
 const schema = new GraphQLSchema({
-    query: RootQueryType
+    query: RootQueryType,
+    mutation: RootMutationType
 })
 
 module.exports = schema
