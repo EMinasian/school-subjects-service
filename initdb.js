@@ -41,11 +41,12 @@ db.prepare(
 
  db.prepare(
    `
-    CREATE TABLE IF NOT EXISTS enrollment (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        subjectId INTEGER REFERENCES subjects(id),
-        studentId INTEGER REFERENCES students(id)
-     )
+   CREATE TABLE IF NOT EXISTS enrollment (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      subjectId INTEGER REFERENCES subjects(id),
+      studentId INTEGER REFERENCES students(id),
+      UNIQUE(subjectId, studentId)
+   )
  `
  ).run();
 
