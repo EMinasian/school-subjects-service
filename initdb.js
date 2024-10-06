@@ -4,6 +4,7 @@ const mockTeachers = require("./mocks/mockTeachers.json")
 const mockSubjects = require("./mocks/mockSubjects.json")
 const mockStudents = require("./mocks/mockStudents.json")
 const mockEnrollment = require("./mocks/mockEnrollment.json")
+const mockUsers = require("./mocks/mockUsers.json")
 
 db.prepare(
   `
@@ -35,6 +36,16 @@ db.prepare(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         firstname TEXT NOT NULL,
         lastname TEXT NOT NULL
+     )
+ `
+ ).run();
+
+ db.prepare(
+   `
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL UNIQUE,
+        hashedPassword TEXT NOT NULL
      )
  `
  ).run();
@@ -101,6 +112,19 @@ for (const student of mockStudents) {
 
 for (const enrollment of mockEnrollment) {
    enrollmentDb.run(enrollment);
+ }
+
+ // "password": "somepassword"
+ const usersDb = db.prepare(`
+   INSERT INTO users VALUES (
+      null,
+      @email,
+      @hashedPassword
+   )
+`);
+
+for (const user of mockUsers) {
+   usersDb.run(user); 
  }
 }
 
