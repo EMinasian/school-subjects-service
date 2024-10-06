@@ -11,7 +11,19 @@ const addUser = async(email, password) => {
             (@email, @hashedPw)
         `
     ).run({ email, hashedPw });
-    
+
 }
 
-module.exports = { addUser }
+const getUserByEmail = (email) => {
+
+    const user = db.prepare(
+        `
+            SELECT email, id, hashedPassword FROM users
+            WHERE email = @email 
+        `
+    ).all({ email });
+    return user[0];
+    
+  }
+
+module.exports = { addUser,getUserByEmail }

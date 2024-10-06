@@ -3,8 +3,8 @@ const cors = require("cors");
 const expressGraphQL = require("express-graphql").graphqlHTTP;
 const bodyParser = require('body-parser');
 const schema = require("./graphql/schema.js")
-const { addUser } = require("./utils/users.js")
-const { createJSONToken } = require("./utils/auth.js")
+const { addUser, getUserByEmail } = require("./utils/users.js")
+const { createJSONToken, isValidPassword } = require("./utils/auth.js")
 
 const app = express()
 
@@ -36,6 +36,32 @@ app.post('/signup', async (req, res, next) => {
     } catch (error) {
       next(error);
     }
+});
+
+app.post('/login', async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await getUserByEmail(email);
+
+  if (!user) {
+    res.status(422).json({
+      message: 'The user could not be found.',
+      errors: { credentials: 'Invalid user.' },
+    });
+  }
+
+  const isValid = await isValidPassword(password, user.hashedPassword);
+
+  if (!isValid) {
+    res.status(422).json({
+      message: 'Invalid credentials.',
+      errors: { credentials: 'Invalid password.' },
+    });
+  }
+
+  const token = createJSONToken(email);
+  res.json({ token });
 });
 
 app.listen(3000)
