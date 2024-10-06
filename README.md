@@ -5,3 +5,5 @@
 - Start the server `npm run start`
 
 The server listens to `http://localhost:3000/`
+
+The frontend for this service is: `https://github.com/EMinasian/school-management-app`
